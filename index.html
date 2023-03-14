@@ -17,15 +17,15 @@
 					<img src="img/logo.png" alt="LOGO" class="app__logo" />
 				</div>
 				<div class="app__body">
-					<button class="app__btn"  @click="goToQuestions">
+					<button class="app__btn" @click="goToQuestions">
 						<i class="fa fa-play-circle-o" aria-hidden="true"></i>
 						<div class="app__btn-text">Начать</div>
 					</button>
-					<button class="app__btn"  @click="goToAchivment" >
-						<i class="fa fa-trophy" aria-hidden="true" ></i>
+					<button class="app__btn" @click="goToAchivment">
+						<i class="fa fa-trophy" aria-hidden="true"></i>
 						<div class="app__btn-text">Достижение</div>
 					</button>
-					<button class="app__btn"  @click="goToSocial">
+					<button class="app__btn" @click="goToSocial">
 						<i class="fa fa-user" aria-hidden="true"></i>
 						<div class="app__btn-text">Автор</div>
 					</button>
@@ -83,13 +83,17 @@
 			<div class="app" v-show="showQuestions">
 				<div class="app__header">
 					<div class="app__header-inner">
-						<div class="app__count"># 1</div>
-						<div class="app__text">Text questions</div>
+						<div class="app__count"># {{number+1}}</div>
+						<div class="app__text">{{questions[number][0]}}</div>
 					</div>
 				</div>
 				<div class="app__body">
-					<button class="app__btn">
-						<div class="app__btn-text">answer 1</div>
+					<button
+						class="app__btn"
+						v-for="(answer,i) in questions[number][1]"
+						@click="nextQuestions(questions[number][2][i])"
+					>
+						<div class="app__btn-text">{{answer}}</div>
 					</button>
 				</div>
 			</div>
@@ -116,7 +120,7 @@
 						<i class="fa fa-youtube-play" aria-hidden="true"></i>
 						<div class="app__btn-text">Youtube</div>
 					</a>
-					<button class="app__btn btn__back"  @click="goToMain">
+					<button class="app__btn btn__back" @click="goToMain">
 						<i class="fa fa-reply" aria-hidden="true"></i>
 					</button>
 				</div>
@@ -165,82 +169,92 @@
 					showAchivment: false,
 					showQuestions: false,
 					showResults: false,
-					number:0,
-					score:{
-						'zerg':0,
-						'primal':0,
-						'protoss':0,
-						'tildarim':0,
-						'terran':0,
-						'infested':0 ,
-						'hybrid':0
+					number: 0,
+					score: {
+						zerg: 0,
+						primal: 0,
+						protoss: 0,
+						tildarim: 0,
+						terran: 0,
+						// infested: 0,
+						// hybrid: 0,
 					},
-					totalGame:localStorage.getItem('sc2TotalGame')?JSON.parse(localStorage.getItem('sc2TotalGame')):{
-						'zerg':0,
-						'primal':0,
-						'protoss':0,
-						'tildarim':0,
-						'terran':0,
-						'infested':0 ,
-						'hybrid':0
-					},
-					totalGames:localStorage.getItem('sc2TotalGames')?localStorage.getItem('sc2TotalGames'):0,
-					questions:questions,
-					results:results,
-					resultsRace:'infested'
+					totalGame: localStorage.getItem('sc2TotalGame')
+						? JSON.parse(localStorage.getItem('sc2TotalGame'))
+						: {
+								zerg: 0,
+								primal: 0,
+								protoss: 0,
+								tildarim: 0,
+								terran: 0,
+								infested: 0,
+								hybrid: 0,
+						  },
+					totalGames: localStorage.getItem('sc2TotalGames') ? localStorage.getItem('sc2TotalGames') : 0,
+					questions: questions,
+					results: results,
+					resultsRace: 'infested',
 				},
-				methods:{
-					goToMain(){
-						this.showMain= true
-						this.showSocial= false
-						this.showAchivment= false
-						this.showQuestions= false
-						this.showResults= false
+				methods: {
+					goToMain() {
+						this.showMain = true
+						this.showSocial = false
+						this.showAchivment = false
+						this.showQuestions = false
+						this.showResults = false
 					},
-					goToSocial(){
-						this.showMain= false
-						this.showSocial= true
-						this.showAchivment= false
-						this.showQuestions= false
-						this.showResults= false
+					goToSocial() {
+						this.showMain = false
+						this.showSocial = true
+						this.showAchivment = false
+						this.showQuestions = false
+						this.showResults = false
 					},
-					goToAchivment(){
-						if(this.totalGames>0){
-							this.showMain= false
-							this.showSocial= false
-							this.showAchivment= true
-							this.showQuestions= false
-							this.showResults= false
-						}else{
+					goToAchivment() {
+						if (this.totalGames > 0) {
+							this.showMain = false
+							this.showSocial = false
+							this.showAchivment = true
+							this.showQuestions = false
+							this.showResults = false
+						} else {
 							this.goToQuestions()
 						}
-						
 					},
-					goToQuestions(){
-						this.score={
-							'zerg':0,
-							'primal':0,
-							'protoss':0,
-							'tildarim':0,
-							'terran':0,
-							'infested':0 ,
-							'hybrid':0
+					goToQuestions() {
+						this.score = {
+							zerg: 0,
+							primal: 0,
+							protoss: 0,
+							tildarim: 0,
+							terran: 0,
+							infested: 0,
+							hybrid: 0,
 						}
-						this.showMain= false
-						this.showSocial= false
-						this.showAchivment= false
-						this.showQuestions= true
-						this.showResults= false
+						this.showMain = false
+						this.showSocial = false
+						this.showAchivment = false
+						this.showQuestions = true
+						this.showResults = false
 					},
-					goToResults(race){
-						this.showMain= false
-						this.showSocial= false
-						this.showAchivment= false
-						this.showQuestions= false
-						this.showResults= true
-						this.resultsRace=race
-					}
-				}
+					goToResults(race) {
+						this.showMain = false
+						this.showSocial = false
+						this.showAchivment = false
+						this.showQuestions = false
+						this.showResults = true
+						this.resultsRace = race
+					},
+					nextQuestions(answer) {
+						if (this.number == 24) {
+							this.number = 0
+							// this.endGame()
+						} else {
+							this.number++
+						}
+						eval(answer)
+					},
+				},
 			})
 		</script>
 	</body>
