@@ -131,14 +131,17 @@ i.fa {
 	border-right: none;
 	border-bottom: none;
 }
+
 .app__card:nth-child(2) {
 	border-left: none;
 	border-bottom: none;
 }
+
 .app__card:nth-child(3) {
 	border-right: none;
 	border-top: none;
 }
+
 .app__card:nth-child(4) {
 	border-left: none;
 	border-top: none;
@@ -197,4 +200,18 @@ i.fa-star {
 .btn__achivment {
 	background-color: rgba(0, 0, 0, 0.5);
 	border: 5px solid rgba(1, 88, 154, 0.5);
+}
+
+.app__header-inner {
+	color: #fff;
+	text-align: center;
+}
+
+.app__count {
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+.app__text {
+	font-size: 18px;
 }
