@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<div class="main">
-			<!-- <div class="app">
+			<div class="app" v-show="showMain">
 				<div class="app__header">
 					<img src="img/logo.png" alt="LOGO" class="app__logo" />
 				</div>
@@ -35,9 +35,9 @@
 						<div class="app__btn-text">Звук</div>
 					</button>
 				</div>
-			</div> -->
+			</div>
 
-			<!-- <div class="app achivments">
+			<div class="app achivments" v-show="showAchivment">
 				<div class="app__body">
 					<div class="app__body-inner">
 						<h2 class="app__body-title">
@@ -79,9 +79,9 @@
 						</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 
-			<!-- <div class="app">
+			<div class="app" v-show="showQuestions">
 				<div class="app__header">
 					<div class="app__header-inner">
 						<div class="app__count"># 1</div>
@@ -93,9 +93,9 @@
 						<div class="app__btn-text">answer 1</div>
 					</button>
 				</div>
-			</div> -->
+			</div>
 
-			<!-- <div class="app">
+			<div class="app" v-show="showSocial">
 				<div class="app__body">
 					<a href="#" class="app__btn" target="_blank">
 						<i class="fa fa-instagram" aria-hidden="true"></i>
@@ -121,8 +121,9 @@
 						<i class="fa fa-reply" aria-hidden="true"></i>
 					</button>
 				</div>
-			</div> -->
-			<div class="app results" data-race="protoss">
+			</div>
+
+			<div class="app results" data-race="protoss" v-show="showResults">
 				<div class="app__body">
 					<div class="app__results-inner">
 						<div class="results__title">Зерг</div>
@@ -156,5 +157,40 @@
 		</div>
 		<script src="js/vue.js"></script>
 		<script src="js/const.js"></script>
+		<script>
+			let app = new Vue({
+				el: '.main',
+				data: {
+					showMain: true,
+					showSocial: false,
+					showAchivment: false,
+					showQuestions: false,
+					showResults: false,
+					number:0,
+					score:{
+						'zerg':0,
+						'primal':0,
+						'protoss':0,
+						'tildarim':0,
+						'terran':0,
+						'infested':0 ,
+						'hybrid':0
+					},
+					totalGame:localStorage.getItem('sc2TotalGame')?JSON.parse(localStorage.getItem('sc2TotalGame')):{
+						'zerg':0,
+						'primal':0,
+						'protoss':0,
+						'tildarim':0,
+						'terran':0,
+						'infested':0 ,
+						'hybrid':0
+					},
+					totalGames:localStorage.getItem('sc2TotalGames')?localStorage.getItem('sc2TotalGames'):0,
+					questions:questions,
+					results:results,
+					resultsRace:'infested'
+				},
+			})
+		</script>
 	</body>
 </html>
